@@ -1,11 +1,11 @@
 import React from 'react'
-
+import Home from './Home'
 
 
 const Layout = () => {
     return(
-        <div className='min-h-screen flex flex-col'>
-        
+        <div>
+            <Home/>
         </div>
     )
 }

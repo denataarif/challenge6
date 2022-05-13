@@ -10,7 +10,7 @@ import axios from "axios";
 
 const Login = () => {
     const { register, handleSubmit, formState } = useForm()
-    const {loginStatus, setloginStatus} = useState({
+    const [loginStatus, setloginStatus] = useState({
         success: false,
         message: ''
     })
@@ -26,7 +26,7 @@ const Login = () => {
         }
         axios.post('http://localhost:4000/login', postData)
         .then( res => {
-            if(typeof res.data.accsessToken !== 'undefined'){
+            if(typeof res.data.accessToken !== 'undefined'){
                 // menyimpan token di localstorage
                 localStorage.setItem('challengeAccessToken', res.data.accessToken)
                 // menyimpan user di redux store
@@ -34,7 +34,11 @@ const Login = () => {
                 axios.get(`http://localhost:4000/users/${user.sub}`)
                 .then( res => {
                     dispatch( userSlice.actions.addUser({ userData: res.data }))
-                    navigate('/')
+                    if (res.data.isAdmin){
+                        navigate('/admin')
+                    }else{
+                        navigate('/user')
+                    }
                 })
         }
         }).catch( err => {
@@ -55,6 +59,7 @@ const Login = () => {
                     <div className={`col-md-3 ${style.contents} text-start`}>
                     <div className={`${style.box} mb-4`}></div>
                     <h3 className="mb-5">Welcome, Admin BCR</h3>
+                    { ( !loginStatus.success && loginStatus.message ) && <p className="text-danger font-italic ">{loginStatus.message}</p>}
                         <form onSubmit={ handleSubmit(formSubmitHandler) }>
                             <div className="form-group first">
                                 <label htmlFor="email" className="mb-3">Email</label>

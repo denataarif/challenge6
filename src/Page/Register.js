@@ -11,7 +11,7 @@ import axios from "axios";
 const Register = () => {
 
     const { register, handleSubmit, formState } = useForm()
-    const {regStatus, setregStatus} = useState({
+    const [regStatus, setregStatus] = useState({
         success: false,
         message: ''
     })
@@ -26,7 +26,7 @@ const Register = () => {
         }
         axios.post('http://localhost:4000/register', postData)
         .then( res => {
-            if(typeof res.data.accsessToken !== 'undefined'){
+            if(typeof res.data.accessToken !== 'undefined'){
                 // menyimpan token di localstorage
                 localStorage.setItem('challengeAccessToken', res.data.accessToken)
                 // menyimpan user di redux store
@@ -34,7 +34,7 @@ const Register = () => {
                 axios.get(`http://localhost:4000/users/${user.sub}`)
                 .then( res => {
                     dispatch( userSlice.actions.addUser({ userData: res.data }))
-                    navigate('/')
+                    navigate('/login')
                 })
         }
         }).catch( err => {
@@ -55,7 +55,7 @@ const Register = () => {
                     <div className={`col-md-3 ${style.contents} text-start`}>
                     <div className={`${style.box} mb-4`}></div>
                     <h3 className="mb-5">Welcome, Make An Account</h3>
-                        {/* { ( !regStatus.success && regStatus.message) && <p className="text-sm text-red-500 italic">{regStatus.message}</p>} */}
+                        { ( !regStatus.success && regStatus.message ) && <p className="text-danger font-italic ">{regStatus.message}</p>}
                         <form onSubmit={ handleSubmit(formSubmitHandler) }>
                             <div className="form-group first">
                                 <label htmlFor="email" className="mb-3">Email</label>
