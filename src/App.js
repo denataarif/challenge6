@@ -8,8 +8,8 @@ import Login from "./Page/Login";
 import Register from "./Page/Register";
 import Layout from './Layout/Layout.js'
 import userPage from "./Page/User";
-import adminPage from "./Page/Admin"
-import ProtectRoute from "./HOC/ProtectedRoute";
+import Admin from "./Page/Admin";
+import ProtectedRoute from "./HOC/ProtectedRoute";
 import UnprotectRoute from "./HOC/UnprotectedRoute"
 import AdminProtectedRoute from "./HOC/AdminProtectedRoute.js";
 import Logout from './Page/Logout'
@@ -36,18 +36,18 @@ function App() {
           <Route path="/logout" element={<Logout />} />
          
           {/* PUBLIC ONLY */}
-          <Route path="/" element={<UnprotectRoute/>}>
+
             <Route path="register" element={<Register/>}/>
             <Route path="login" element={<Login/>}/>
-          </Route>
+
           
           {/* PROTECTED */}
-          <Route path="/" element={<ProtectRoute/>}>
-            <Route path="user" element={<userPage/>}/>
+          <Route path="/" element={<ProtectedRoute/>}>
+            <Route path="/user" element={<Home/>}/>
           </Route>
 
-          <Route path="/" element={<AdminProtectedRoute/>}>
-            <Route path='/admin' element={<adminPage/>}/>
+          <Route path="/" element={<ProtectedRoute/>}>
+            <Route path='/admin' element={<Admin/>}/>
           </Route>
           
         </Routes>

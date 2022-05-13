@@ -22,7 +22,6 @@ const Login = () => {
         const postData = {
             email: data.user_email,
             password: data.user_password,
-            isAdmin: false
         }
         axios.post('http://localhost:4000/login', postData)
         .then( res => {

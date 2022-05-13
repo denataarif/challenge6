@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux'
 import { Outlet, Navigate } from 'react-router'
 
 
-const ProtectRoute = () => {
+const ProtectedRoute = () => {
 
     const user = useSelector( store => store.user.data )
 
@@ -19,4 +19,4 @@ const ProtectRoute = () => {
    
 }
 
-export default ProtectRoute
+export default ProtectedRoute
